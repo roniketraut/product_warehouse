@@ -35,11 +35,10 @@ def extract_fakeapi():
     products_df = extract_product()
     users_df = extract_users()
     carts_df = extract_carts()
-    carts_df.drop(columns = ["__v"], inplace = True)
 
-    print(products_df.columns)
-    print(users_df.columns)
-    print(carts_df.columns)
+    print(products_df.dtypes)
+    print(users_df.dtypes)
+    print(carts_df.dtypes)
     return products_df, users_df, carts_df
 
 
