@@ -109,8 +109,4 @@ Execute the steps in order:
 *   **Staging models:** Located in `product_warehouse_dbt/models/staging/`
 *   **Mart models (dimensions, facts):** Located in `product_warehouse_dbt/models/marts/`
 
-Below are the images from Snowflake
-![alt text](image.png)
-
-![alt text](image-1.png)
 
