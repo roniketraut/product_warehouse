@@ -11,10 +11,13 @@ def clean_data():
 
     # renaming the columns as apt to the staging tables in pg 
     products_df.rename(columns = {"rating_rate": "rating"}, inplace = True)
-    users_df.rename(columns={"name_firstname": "firstname", "name_lastname": "lastname"})
+    users_df.rename(columns={"name_firstname": "firstname", "name_lastname": "lastname"}, inplace=True)
 
     # changing the data type of date column in date to datetype
     carts_df["date"] = pd.to_datetime(carts_df["date"], errors="raise")
     carts_df["date"] = carts_df["date"].dt.normalize()
 
-    return products_df, users_df, carts_df
+    return products_df.head(), users_df.head(), carts_df.head()
+
+
+products_df, users_df, carts_df = clean_data()

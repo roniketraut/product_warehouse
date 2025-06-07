@@ -1,0 +1,60 @@
+version: 2
+
+sources:
+  - name: python_raw_data
+    description: "Raw data loaded by the Python script from the FakeStore API"
+    database: FAKESTORE_DEV_DB
+    schema: PYTHON_STAGING  
+    tables:
+      - name: STG_PRODUCTS
+        description: "Raw products data from FakeStoreAPI"
+        columns:
+          - name: ID
+            tests:
+              - unique
+              - not_null
+          - name: TITLE
+          - name: PRICE
+          - name: DESCRIPTION
+          - name: CATEGORY
+          - name: IMAGE
+          - name: RATING
+          - name: RATING_COUNT
+
+      - name: STG_USERS
+        description: "Raw users data from FakeStoreAPI"
+        columns:
+          - name: ID
+            tests:
+              - unique
+              - not_null
+          
+          - name: EMAIL
+          - name: USERNAME
+          - name: PASSWORD
+          - name: ADDRESS_GEOLOCATION_LAT
+          - name: ADDRESS_GEOLOCATION_LONG
+          - name: ADDRESS_CITY
+          - name: ADDRESS_STREET
+          - name: ADDRESS_NUMBER
+          - name: ADDRESS_ZIPCODE
+          - name: FIRSTNAME
+          - name: LASTNAME
+
+
+      - name: STG_CARTS
+        description: "Staging model for carts containing product and user references"
+        columns:
+          - name: ID
+            description: "Cart ID (not globally unique, requires productId to uniquely identify a row)"
+          - name: PRODUCTID
+            description: "Foreign key referencing products.id"
+          - name: USERID
+            description: "Foreign key referencing users.id"
+          - name: DATE
+            description: "Date the cart was created or updated"
+          - name: QUANTITY
+            description: "Quantity of the product in the cart"
+        tests:
+          - unique:
+              column_name: "concat(ID, '-', PRODUCTID)"

@@ -1,0 +1,114 @@
+version: 2
+
+models:
+  - name: dim_products
+    description: "Dimension table for products"
+    columns:
+      - name: PRODUCT_ID
+        description: "Unique identifier for each product"
+        tests:
+          - not_null
+          - unique
+
+      - name: TITLE
+        description: "Name or title of the product"
+
+      - name: PRICE
+        description: "Price of the product"
+
+      - name: CATEGORY
+        description: "Category of the product"
+
+      - name: RATING
+
+      - name: RATING_COUNT 
+
+
+  - name: dim_users
+    description: "Dimension tble for the users"
+    columns:
+      - name: USER_ID
+        description: "Unique identifier for each user"
+        tests:
+          - not_null
+          - unique
+
+      - name: USERNAME
+        description: "Username of the user"
+
+      - name: EMAIL
+        description: "Email of the user"
+
+      - name: PASSWORD
+        description: "Password of the user"
+
+      - name: ADDRESS_CITY
+        description: "City of the user" 
+
+  - name: dim_date
+    description: "Dimension table for dates"
+    columns:
+      - name: DATE
+        description: "Full date value"
+
+      - name: DATE_ID
+        description: "Surrogate key for the date"
+        tests:
+        - unique
+        - not_null
+
+      - name: YEAR
+        description: "Year component of the date"
+
+      - name: MONTH
+        description: "Month number (1-12)"
+
+      - name: MONTH_NAME
+        description: "Name of the month"
+
+      - name: DAY
+        description: "Day of the month"
+
+      - name: DAY_NAME
+        description: "Day of the week"
+
+      - name: QUARTER
+        description: "Quarter of the year"
+
+      
+  - name: fact_carts
+    description: "Fact table for cart activity, linking users, products, and dates"
+    columns:
+      - name: CART_ID
+        description: "Identifier for the original cart transaction."
+        # If CART_ID is not unique per row (e.g., if one cart has multiple products),
+        # consider creating and testing a surrogate key for this fact table.
+
+      - name: DATE_ID
+        description: "Foreign key to the date dimension, referencing the date of the cart."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: DATE_ID
+
+      - name: QUANTITY
+        description: "The quantity of the product in this cart item."
+        tests:
+          - not_null
+
+      - name: PRODUCT_ID
+        description: "Foreign key to the product dimension."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_products')
+              field: PRODUCT_ID
+
+      - name: USER_ID
+        description: "Foreign key to the user dimension."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: USER_ID

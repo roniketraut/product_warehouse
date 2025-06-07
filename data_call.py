@@ -1,6 +1,8 @@
 import pandas as pd
 import requests
 from pandas import json_normalize
+import logging
+logging.basicConfig(format = '%(levelname)s: %(message)s', level=logging.DEBUG)
 
 def extract_fakeapi():
     """Extracting data from fake apis"""
@@ -36,9 +38,6 @@ def extract_fakeapi():
     users_df = extract_users()
     carts_df = extract_carts()
 
-    print(products_df.dtypes)
-    print(users_df.dtypes)
-    print(carts_df.dtypes)
     return products_df, users_df, carts_df
 
 
